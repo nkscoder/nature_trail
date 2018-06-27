@@ -1,0 +1,177 @@
+<?php /** @var Nitesh\Singh\Block\Posts $block */ ?>
+
+<style type="text/css">
+    .post-content .post-description .post-ftimg-hld img{
+        min-height:210px;
+    }
+    @media only screen and (min-width:1024px){
+    .post-content .post-description .post-ftimg-hld img {
+            height: 210px;
+            max-width: 380px;
+        }
+    }
+     @media only screen and (max-width:767px){
+           .post-content .post-description .post-ftimg-hld img
+           {
+                min-height:auto;
+            }
+     }
+</style>
+
+   <div class="page-title-wrapper">
+
+	<div class="breadcrumbs">
+    <ul class="items">
+                    <li class="item home">
+                            <a href="<?php echo htmlspecialchars($block->getBaseUrl()); ?>" title="Go to Home Page">Home</a>
+                        </li>
+               
+                    <li class="item all-trails">
+                            <strong>all trails</strong>
+                        </li>
+            </ul>
+</div>
+
+</div>
+<div class="content-heading">
+    <h2 class="title">all Trails</h2>
+	</div>
+<div class="post-list-wrapper">
+    <div class="row" style="margin-bottom:15px;">
+    <div class ="col-xs-12 col-sm-3 col-md-3 search-block"> 
+    <form action="<?php echo htmlspecialchars($this->getUrl().'trails/'); ?>" method="get">
+    <input type="text" name="search" placeholder="Search">
+     </div>
+      <div class ="col-xs-12 col-sm-2 col-md-2 col-md-offset-7 sort-block"> 
+     <select name="sort" onchange="this.form.submit()" class="select-custom">
+        <option value="">Sort by</option>
+        <option value="1" <?php echo htmlspecialchars(($this->sortOrder=='0' ? 'selected':'')); ?>>Popular</option>
+        <option value="1" <?php echo htmlspecialchars(($this->sortOrder=='1' ? 'selected':'')); ?>>Recent</option>
+        <option value="2" <?php echo htmlspecialchars(($this->sortOrder=='2' ? 'selected':'')); ?>>Name(A-Z)</option>
+    </select>
+    </div>
+     <div class ="col-xs-12 col-sm-6 col-md-2 hidden"> 
+    <input type="submit" value="search">
+    </div>
+</form>
+
+  </div>  
+    <?php if($block->searchKey()){
+
+        if ($block->getPagerHtml()){ ?>
+            
+            <?php echo htmlspecialchars('Showing results for <strong>"'.$block->searchKey().'"</strong>'); ?>
+           <?php
+            }else{
+            echo htmlspecialchars('No results found for <strong>"'.$block->searchKey().'"</strong>');
+        }
+
+    }?>
+<div class="row">
+<?php foreach($block->getAllTrails() as $post): ?>
+
+<div class="post-holder col-xs-12 col-sm-6 col-md-4 text-left">
+    <div class="post-content">
+        <div class="post-description clearfix">
+             <div class="post-ftimg-hld">
+                <a href="<?php echo htmlspecialchars($block->getBaseUrl().'trail/'.$post->getTrailsSlug()); ?>" target="_blank">
+               
+                   <?php
+                       if($post->getTrailsUrl()){
+                   
+                   $image=explode(',',$post->getTrailsUrl()) ; 
+                   
+                  
+                   ?>
+
+                 <img src="<?php echo htmlspecialchars($block->getBaseUrl()); ?>pub/media/trails/<?php echo htmlspecialchars($image[0]); ?>" alt="trail-img" />
+                  
+                  <?php }else{  ?>
+                                   <img src="<?php echo htmlspecialchars($block->getBaseUrl()); ?>pub/media/trails/trails.png" alt="trail-img" />
+
+                  <?php } ?>
+                  
+                </a>
+        </div>
+    <div class="blog-data">
+       
+   <h2 class="post-title">
+					
+        <a class="post-item-link" href="<?php echo htmlspecialchars($block->getBaseUrl().'trail/'.$post->getTrailsSlug()); ?>">
+              
+                <?php $desc = $post->getTrailsName(); ?>
+               <?php 
+        								$totalword = strlen($desc); 
+        								if($totalword >= 30){
+        									$shortdesc = substr(($desc),0,30)." ...";
+        									echo htmlspecialchars($shortdesc);
+        								}else{
+        							     	echo htmlspecialchars($desc);
+        								}
+        								
+        								?>
+               
+        </a>
+    </h2>
+    
+    <p class="trail-list-info">
+       <?php $desc = $post->getTrailsDescribing(); ?>
+       <?php $test = strip_tags($desc); ?>
+        <?php 
+        								$totalword = strlen($test); 
+        								if($totalword >= 105){
+        									$shortdesc = substr(($test),0,98)." ...";
+        									echo $shortdesc;
+        								}else{
+        							     	echo $test;
+        								}
+        								
+        								?>
+      
+    </p>
+    
+    <div class="img-date-wrapper clearfix">
+                    <div class="img-wrapper">
+                        
+                        <?php if($post->getCoustomerProfileImage()){ ?>
+                        <img src="<?php echo htmlspecialchars($block->getBaseUrl().'pub/media/profile/'.$post->getCoustomerProfileImage()); ?>" alt="Demo" data-pagespeed-url-hash="4293841289" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+                         <?php }else{ ?>
+                                 <img src="<?php echo htmlspecialchars($block->getBaseUrl()); ?>pub/media/trails/default.png" alt="Demo" data-pagespeed-url-hash="4293841289" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+
+                         
+                         <?php }?>
+                    </div>
+                    <div class="date-wrapper">
+                        
+                        <a href="<?php echo htmlspecialchars($block->getBaseUrl().'community/post/view/id/'.$post->getEntityId()); ?>">
+                      <h5> <?php echo htmlspecialchars($post->getFirstName().' '.$post->getLastName()); ?></h5>
+                        </a>
+                        
+                        <div class="post-info clear">
+                                    <div class="item post-posed-date">
+                                        <!--<span class="label">Posted:</span>-->
+                                        <span class="value">
+
+                                        <?php
+                                         $date = date('d-F-Y',  strtotime($post->getTrailsCreateAt()));
+                                         echo htmlspecialchars($date);
+                                         ?></span>
+                                    </div>
+                                             
+                         </div>                    
+                    </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+
+<?php endforeach; ?>
+</div>
+
+ <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom">
+            <?php echo $block->getPagerHtml(); ?>
+        </div>
+    <?php endif ?>
+</div>

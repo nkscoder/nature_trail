@@ -1,0 +1,7 @@
+
+        <referenceContainer name="content">
+
+            <block class="Nitesh\Singh\Block\FeaturedTrail"
+                   name="post.featuredTrail"
+                   template="Nitesh_Singh::post/featured.phtml" />
+        </referenceContainer>

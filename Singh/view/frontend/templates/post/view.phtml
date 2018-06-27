@@ -1,0 +1,341 @@
+<style type="text/css">
+
+    .trails-photo{
+        height: 250px;
+        margin-bottom:20px;
+        object-fit:cover;
+    }
+    #modal-banner .modal-dialog
+    {
+        max-width: 1000px;
+        width: 100%;
+    }
+    #modal-banner .modal-dialog img
+    {
+        width:100%;
+    }
+    .modal-content
+    {
+        background-color: #fff;
+    }
+    .modal-open .modal{
+        background-color: #000;
+    }
+    .modal-header .close {
+        margin-top: 0;
+        padding: 10px 10px 0;
+        color: #000;
+        text-shadow: none;
+        opacity: 1;
+    }
+    
+    
+    @media only screen and (max-width: 991px){
+
+        .modal-content {
+            background: #fff;
+        }
+    }
+</style>
+<?php
+foreach ($block->getPostTrails() as $post)
+{ ?>
+<div class="trail-banner-wrapper" data-toggle="modal" data-target="#modal-banner" style="cursor:pointer;">
+<div class="trail-list-banner">
+
+  <?php
+                 if($post->getTrailsUrl()){
+
+            $imag=explode(',',$post->getTrailsUrl()) ;
+
+
+             ?>
+
+           <img src="<?php echo htmlspecialchars($block->getBaseUrl()); ?>pub/media/trails/<?php echo htmlspecialchars($imag[0]);?>" alt="trail-img" />
+
+            <?php }else{  ?>
+                             <img src="<?php echo htmlspecialchars($block->getBaseUrl()); ?>pub/media/trails/trails.png" alt="trail-img" />
+
+            <?php } ?>
+
+
+
+
+
+
+
+</div>
+<div class="post-list-wrapper trail-title-info">
+<h1> <?php echo htmlspecialchars($post->getTrailsName()); ?> </h1>
+<span><?php echo htmlspecialchars(date('d-F-Y', strtotime($post->getTrailsCreateAt())));  ?></span>
+</div>
+</div>
+<div class="page-title-wrapper">
+
+<div class="breadcrumbs">
+<ul class="items">
+
+              <li class="item home">
+                      <a href="<?php echo htmlspecialchars($block->getBaseUrl()); ?>" title="Go to Home Page">Home</a>
+                  </li>
+
+              <li class="item all-trails">
+                      <a href="<?php echo htmlspecialchars($block->getBaseUrl()); ?>singh" title="singh">all singh</a>
+                  </li>
+              <li class="item trail">
+                      <strong><?php echo htmlspecialchars($post->getTrailsName()); ?></strong>
+                  </li>
+      </ul>
+</div>
+
+</div>
+
+<div class="post-list-wrapper">
+<div class="row">
+<div class="col-sm-3 col-xs-12">
+
+  <div class="post-content card">
+  <div class="post-description clearfix">
+  <div class="img-date-wrapper clearfix">
+              <div class="img-wrapper">
+
+                  <?php if(!$post->getCoustomerProfileImage()){ ?>
+                  <img src="<?php echo htmlspecialchars($block->getBaseUrl()); ?>pub/media/trails/default.png" alt="Demo" data-pagespeed-url-hash="4293841289" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+                   <?php }else{ ?>
+                           <img src="<?php echo htmlspecialchars($block->getBaseUrl().'pub/media/profile/'.$post->getCoustomerProfileImage());?>" alt="Demo" data-pagespeed-url-hash="4293841289" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+
+
+                   <?php }?>
+
+
+
+              </div>
+              <div class="date-wrapper">
+
+                <a href="<?php echo  htmlspecialchars($block->getBaseUrl().'community/post/view/id/'.$post->getEntityId()); ?>">
+                  <h5><?php echo htmlspecialchars($post->getFirstName().' '.$post->getMiddleName().' '.$post->getLastName());?></h5></a>
+
+<div class="post-info clear">
+<div class="item post-posed-date">
+
+  <span class="value">
+      <?php echo htmlspecialchars(date('d-F-Y', strtotime($post->getTrailsCreateAt())));  ?>
+      </span>
+</div>
+
+      </div>                    </div>
+          </div>
+          
+          
+          <p style="font-size: 13px;margin-top: 10px;">
+              <?php
+              if($post->getCoustomerDescription()){
+              
+              $desc = $post->getCoustomerDescription(); 
+ 
+                                  $totalword = strlen($desc);
+                                  if($totalword >= 200){
+                                      $shortdesc = substr(($desc),0,140)." ...";
+                                      echo $shortdesc;
+                                  }else{
+                                       echo $desc;
+                                  }
+
+                                  ?>&nbsp;&nbsp;<a style="display:inline-block;" class="trail-read-more"  href="<?php echo htmlspecialchars($block->getBaseUrl().'community/post/view/id/'.$post->getEntityId()); ?>"> Read more » </a>
+                                  
+                                 <?php } ?> 
+         </p>
+          </div>
+          </div>
+          <div class="about-trail">
+                 <h4>About Trail</h4>
+                  <div class="post-content card">
+                      <p><b>Vehicle: </b><?php echo htmlspecialchars($post->getTrailsVehicleName()); ?></p>
+                      <p><b>Start Point: </b><?php echo htmlspecialchars($post->getTrailsStartPoint()); ?></p>
+                      <p><b>Start Date: </b><?php
+
+
+
+
+                      echo htmlspecialchars(date('d-F-Y', strtotime($post->getTrailsStartDate()))); ?></p>
+                      <p><b>End Point: </b><?php echo htmlspecialchars($post->getTrailsEndPoint()); ?></p>
+                      <p><b>End Date: </b><?php echo htmlspecialchars(date('d-F-Y', strtotime($post->getTrailsEndDate())));  ?></p>
+
+
+                  </div>
+          </div>
+
+</div>
+<div class="col-sm-9 col-xs-12 main-desc">
+
+   <p><?php echo $post->getTrailsDescribing(); ?></p>
+
+
+</div>
+
+<div class="col-sm-9 col-xs-12">
+<div class="row">
+
+  <div class="col-sm-12 gallery-block">
+      <h4>Photos & Videos </h4>
+       <?php $image=explode(',',$post->getTrailsUrl()) ;  ?>
+
+       <?php $images= array_splice($image,0); $i=0; foreach ($images  as $img) { $i=$i+1; ?>
+
+        <div class="col-sm-4">
+            <div class="gallery-element" data-toggle="modal" data-target="#modal<?php echo htmlspecialchars($i); ?>" style="cursor:pointer;">
+              <div class="gallery-overlay">
+                 <i class="fa fa-search-plus" aria-hidden="true"></i>
+                </div>
+              <img src="<?php echo htmlspecialchars($block->getBaseUrl()); ?>pub/media/singh/<?php echo htmlspecialchars($img); ?>" alt="trail-img" class="trails-photo"/>
+        </div>
+        </div>
+
+
+
+
+
+
+      <?php } ?>
+
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+<?php } ?>
+
+</div>
+</div>
+</div>
+
+<div class="bottom-trails trail-block">
+    <div class="row">
+        <div class="content-heading">
+            <h2 class="title">featured trails  </h2>
+        </div>
+
+        <div class="trail-wrapper home-trail-wrapper">
+
+
+
+
+
+
+
+            <?php
+            foreach($block->getSinglePageFeaturedTrails() as $post){
+                ?>
+
+
+
+                <div class="item product-blog-inner post-holder">
+                    <div class="post-content">
+                        <div class="post-description clearfix">
+                            <div class="post-ftimg-hld image-block">
+                                <a class="subimage" title="<?php echo htmlspecialchars($post->getTrailsName()); ?>" href="<?php echo htmlspecialchars($block->getBaseUrl().'trail/'.$post->getTrailsSlug()); ?>">
+                                    <?php $image=explode(',',$post->getTrailsUrl()) ; ?>
+
+                                    <img src="<?php echo htmlspecialchars($block->getBaseUrl()); ?>pub/media/trails/<?php echo htmlspecialchars($image[0]); ?>" alt="trail-img" data-pagespeed-url-hash="2958147614" />
+
+                                </a></div>
+                            <div class="blog-data">
+                                <div class="post-desc">
+                                    <div class="post-title-holder clearfix">
+                                        <div class="post-title"><a class="post-item-link" href="<?php echo htmlspecialchars($block->getBaseUrl().'trail/'.$post->getTrailsSlug()); ?>">
+
+                                                <?php $desc = $post->getTrailsName(); ?>
+                                                <?php
+                                                $totalword = strlen($desc);
+                                                if($totalword >= 35){
+                                                    $shortdesc = substr(($desc),0,33)." ...";
+                                                    echo htmlspecialchars($shortdesc);
+                                                }else{
+                                                    echo htmlspecialchars($desc);
+                                                }
+                                                ?>
+
+
+                                            </a></div>
+                                    </div>
+                                    <div class="post-text-hld clearfix">
+                                        <p>
+                                            <?php $desc = $post->getTrailsDescribing(); ?>
+                                            <?php $test = strip_tags($desc); ?>
+                                            <?php
+                                            $totalword = strlen($test);
+                                            if($totalword >= 105){
+                                                $shortdesc = substr(($test),0,96)." ...";
+                                                echo $shortdesc;
+                                            }else{
+                                                echo $test;
+                                            }
+
+                                            ?>
+                                        </p>
+                                    </div>
+                                    <a class="trail-read-more" title="<?php echo htmlspecialchars($post->getTrailsName()); ?>" href="<?php echo htmlspecialchars($block->getBaseUrl().'trail/'.$post->getTrailsSlug()); ?>"> Read more » </a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <?php } ?>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<?php $image=explode(',',$block->getPost()->getTrailsUrl()) ; ?>
+
+<?php $i=0; foreach ($images as $img) { $i=$i+1; ?>
+
+
+
+    <div class="modal fade" id="modal<?php echo $i; ?>" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+
+                </div>
+                <div class="modal-body">
+
+                    <img src="<?php echo htmlspecialchars($block->getBaseUrl()); ?>pub/media/trails/<?php echo htmlspecialchars($img); ?>" alt="trail-img" />
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn action primary btn-default" data-dismiss="modal">Close</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<?php }?>
+    <div class="modal fade" id="modal-banner" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+
+                </div>
+                <div class="modal-body">
+
+                  <img src="<?php echo htmlspecialchars($block->getBaseUrl()); ?>pub/media/trails/<?php echo htmlspecialchars($imag[0]);?>" alt="trail-img" />
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn action primary btn-default" data-dismiss="modal">Close</button>-->
+                </div>
+            </div>
+        </div>
+    </div>

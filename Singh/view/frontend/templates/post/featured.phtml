@@ -1,0 +1,81 @@
+<style>
+    .owl-controls
+    {
+        display: none;
+    }
+</style>
+
+<div class="bottom-trails trail-block">
+    <div class="row">
+        <div class="content-heading">
+            <h2 class="title"> trails talks </h2>
+        </div>
+
+        <div class="trail-wrapper home-trail-wrapper">
+
+
+            <?php
+            foreach($block->getFeaturedTrails() as $post){
+            ?>
+
+
+
+            <div class="item product-blog-inner post-holder">
+                <div class="post-content">
+                    <div class="post-description clearfix">
+                        <div class="post-ftimg-hld image-block"><a class="subimage" title="<?php echo htmlspecialchars($post->getTrailsName()); ?>" href="<?php echo htmlspecialchars($block->getFeaturedTrailsUrl($post));?>">
+                                <?php $image=explode(',',$post->getTrailsUrl()) ; ?>
+
+                                <img src="<?php echo htmlspecialchars($block->getBaseUrl()); ?>pub/media/trails/<?php echo htmlspecialchars($image[0]); ?>" alt="trail-img" data-pagespeed-url-hash="2958147614" />
+
+                            </a></div>
+                        <div class="blog-data">
+                            <div class="post-desc">
+                                <div class="post-title-holder clearfix">
+                                    <div class="post-title"><a class="post-item-link" href="<?php echo htmlspecialchars($block->getFeaturedTrailsUrl($post));?>">
+
+                                            <?php $desc = $post->getTrailsName(); ?>
+                                            <?php
+                                            $totalword = strlen($desc);
+                                            if($totalword >= 30){
+                                                $shortdesc = substr(($desc),0,30)." ...";
+                                                echo htmlspecialchars($shortdesc);
+                                            }else{
+                                                echo htmlspecialchars($desc);
+                                            }
+                                            ?>
+
+
+                                        </a></div>
+                                </div>
+                                <div class="post-text-hld clearfix">
+                                    <p>
+                                      <?php $desc = $post->getTrailsDescribing(); ?>
+       <?php $test = strip_tags($desc); ?>
+        <?php 
+        								$totalword = strlen($test); 
+        								if($totalword >= 105){
+        									$shortdesc = substr(($test),0,96)." ...";
+        									echo $shortdesc;
+        								}else{
+        							     	echo $test;
+        								}
+        								
+        								?>
+                                    </p>
+                                </div>
+                                <a class="trail-read-more" title="<?php echo htmlspecialchars($post->getTrailsName()); ?>" href="<?php echo htmlspecialchars($block->getFeaturedTrailsUrl($post));?>"> Read more » </a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<?php } ?>
+
+
+</div>
+</div>
+</div>
+<div class="text-center">
+<a style="margin-bottom:30px;" href="<?php echo htmlspecialchars($block->getBaseUrl()); ?>trails" class="action primary">view all trails</a>
+</div>
